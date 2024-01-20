@@ -1,0 +1,24 @@
+on: 
+  push:
+    branches:
+      -main
+  pull_request:
+    branches:
+      -main
+name: FTP Deployment
+jobs:
+    deploy:
+      name: 🎉 Deployment
+      runs-on: ubuntu-latest
+      steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+      
+      - name: 📂 FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: ${{ secrets.ftp_server }} 
+          username: ${{ secrets.ftp_username }} 
+          password: ${{ secrets.ftp_password }}
+          server-dir: html/straub/
+          protocol: ftps
